@@ -1,10 +1,8 @@
 {% block content %}
     {% for blog in blogs %}
         <section>
-            <h3>{{ blog.title }}</h3>
-            <p>{{ blog.author }}</p>
-            <p>{{ blog.body }}</p>
-            <p>{{ blog.date_created }}</p>
+            <h3><a href="{% url 'blog_detail' blog.id %}">{{ blog.title }}</a></h3>
+            
         </section>
     {% endfor %}
 {% endblock content %}

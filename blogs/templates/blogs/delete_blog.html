@@ -1,12 +1,11 @@
+{% extends 'blogs/base.html' %}
+
 {% block content %}
-        <section>
-            <h3>{{ blog.title }}</h3>
-            <p>Author: {{ blog.author }}</p>
-            <p>{{ blog.body }}</p>
-            <p>{{ blog.date_created }}</p>
-        </section>
-        <form method="POST" action="{% url 'delete_blog' blog.id %}">
-            {% csrf_token %}
-            <button type="submit">Delete Blog</button>
-        
+
+<form method='post'>
+{% csrf_token %}
+<h2> Do you really want to delete this blog? </h2>
+<button type='submit'>Delete</button>
+</form>
+
 {% endblock content %}

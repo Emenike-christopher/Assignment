@@ -2,13 +2,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import BlogPost
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 
 def home(request):
     """Return the list of blogposts."""
     blogs = BlogPost.objects.all()
     context = {'blogs': blogs}
     return render(request, template_name='blogs/home.html', context=context)
+
+
+
+
+
 
 @login_required
 def blog_detail(request, blog_id):
@@ -38,7 +43,7 @@ def update_blog(request, blog_id):
     """Update a blog."""
     blog = get_object_or_404(BlogPost, id=blog_id)
     print(request.user)
-    if blog.author != request.user:
+    if blog.author != (request.user):
         raise Http404
         
     if request.method == 'POST':

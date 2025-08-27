@@ -1,10 +1,35 @@
-{% extends 'blogs/base.html' %}
+{% extends "blogs/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Home - My Blog{% endblock %}
 
 {% block content %}
-{% for blog in blogs %}
-<section>
-<h3><a href="{% url 'blog-detail' blog.id %}">{{ blog.title }}</a></h3>
-</section>
-{% endfor %}
+<div class="row g-4">
+    {% for blog in blogs %}
+    <div class="col-lg-6 col-md-12">
+        <div class="card shadow-sm rounded-3 p-3 blog-card h-100">
+            
+            <!-- Blog Title -->
+            <h5 class="card-title mb-2">{{ blog.title }}</h5>
 
-{% endblock content %}
+            <!-- Author & Date -->
+            <p class="text-muted mb-3">
+                by {{ blog.author }} | {{ blog.date_created|date:"M d, Y" }}
+            </p>
+
+            <!-- Truncated Blog Content -->
+            <p class="card-text" style="line-height: 1.6;">
+                {{ blog.body|truncatewords:30 }}
+            </p>
+
+            <!-- Read More -->
+            <a href="{% url 'blog-detail' blog.id %}" class="read-more">Read More →</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p class="text-muted">No blog posts yet. {% if user.is_authenticated %}<a href="{% url 'create-blog' %}">Write one?</a>{% endif %}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

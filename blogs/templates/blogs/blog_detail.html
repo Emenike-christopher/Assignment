@@ -1,13 +1,33 @@
+{% extends "blogs/base.html" %}
+{% load django_bootstrap5 %}
 
-{% extends 'blogs/base.html' %}
+{% block title %}{{ blog.title }} - My Blog{% endblock %}
 
 {% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <div class="card shadow-sm rounded-3 p-4 blog-card">
+            <!-- Blog Title -->
+            <h2 class="card-title mb-3">{{ blog.title }}</h2>
 
-<section>
-<h3>{{ blog.title }}</h3>
-<p>Author: {{ blog.author }}</p>
-<p>{{ blog.body }}</p>
-<p>Date: {{ blog.date_created }}</p>
-</section>
-<a href="{% url 'delete-blog' blog.id %}">Delete</a>
-{% endblock content %}
+            <!-- Author & Date -->
+            <p class="text-muted mb-4">
+                by {{ blog.author }} | {{ blog.date_created|date:"M d, Y" }}
+            </p>
+
+            <!-- Blog Content -->
+            <div class="card-text" style="line-height: 1.8; font-size: 1.05rem;">
+                {{ blog.body|linebreaks }}
+            </div>
+
+            <!-- Action Buttons -->
+            {% if user.is_authenticated and user == blog.author %}
+            <div class="mt-4 d-flex gap-2">
+                <a href="{% url 'update-blog' blog.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'delete-blog' blog.id %}" class="btn btn-outline-danger">Delete</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

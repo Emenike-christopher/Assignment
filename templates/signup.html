@@ -1,11 +1,21 @@
-{% extends 'blogs/base.html' %}
+{% extends "blogs/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Sign Up - My Blog{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated == False %}
-<form method='post'>
-{% csrf_token %}
-{{ form.as_p }}
-<button type='submit'>Sign Up</button>
-</form>
-{% endif %}
-{% endblock content %}
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm rounded-3 p-4 blog-card">
+            <h3 class="card-title text-center mb-4">Sign Up</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

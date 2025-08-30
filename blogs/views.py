@@ -38,7 +38,7 @@ def create_blog(request):
         context = {'form': form}
         return render(request, template_name='blogs/create_blog.html', context=context)
     
-#@login_required   
+@login_required   
 def update_blog(request, blog_id):
     """Update a blog."""
     blog = get_object_or_404(BlogPost, id=blog_id)
